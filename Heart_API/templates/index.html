@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- ajex -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+    *{
+    margin:0;
+    padding:0;
+    font-family: 'Josefin Sans', sans-serif;
+    }
+    html,
+    body,
+    header,
+    #intro {
+    height: 100%;
+    }
+    img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    }
+    footer{
+      width: 100%;
+      position: absolute;
+      height: 8vh;
+      color: white;
+      left: 0;
+      background-color: #333a40;
+      font-size: 1.5rem;
+      font-family: serif;
+      text-align: center;
+    }
+    </style>
+    <title>Heart disease Prediction</title>
+  </head>
+  <body>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="">Health App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse text-primary text-center fs-1" id="navbarCollapse">
+          Heart Disease Prediction
+        </div>
+      </nav>
+      <!--Mask-->
+      <div id="intro" class="container-fluid view ">
+        <h4 class="text-center text-capitalize pt-3 fs-6">Know your chances of getting a heart disease in one Click!</h4>
+        <hr class="w-75 mx-auto pt-1">
+        <div class="row mb-5">
+          <div class="col-lg-6 col-md-6 col-12 my-auto">
+            <img src="../static/img/heart.gif" class="float-left">  
+          </div>
+          <div class="col-lg-6 col-md-6 col-12">
+            <form id="my-form" method="POST" action="{{ url_for('predict') }}">
+              <div class="form-group">
+                <label for="age">Age</label>
+                <input class="form-control" type="number" step="any" id="age" name="age0" required="required" placeholder="Age">
+              </div>
+
+              <div class="form-group">
+                <label for="sex">Sex</label>
+                <select class="form-control" id="sex" name = "sex" required="required" placeholder="Sex">
+                  <option value="1">Male</option>
+                  <option value="0">Female</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="cp">Chest Pain Type</label>
+                <select class="form-control" id="cp" name = "cp" required="required" placeholder="Chest Pain Type">
+                  <option value="0">Typical Angina</option>
+                  <option value="1">Atypical Angina</option>
+                  <option value="2">Non-Anginal Pain</option>
+                  <option value="3">Asymptomatic</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <!-- TODO : Year to accept only year date picker -->
+                <label for="trestbps">Resting Blood Pressure (in mm Hg)</label>
+                <input class="form-control" type="number" id="trestbps" name="trestbps" required="required" placeholder="Resting Blood Pressure">
+              </div>
+
+              <div class="form-group">
+                <label for="chol">Serum Cholestoral in mg/dl</label>
+                <input class="form-control" type="number" step="any" id="chol" name="chol" required="required" placeholder="Serum Cholestoral">
+              </div>
+
+              <div class="form-group">
+                <label for="fbs">Fasting Blood Sugar</label>
+                <select class="form-control" id="fbs" name = "fbs" required="required" placeholder="Fasting Blood Sugar">
+                  <option value="0">Fasting Blood Sugar < 120 mg/dl</option>
+                  <option value="1">Fasting Blood Sugar > 120 mg/dl</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="restecg">Resting Electro-cardiographic Result</label>
+                <select class="form-control" type="number" id="restecg" name="restecg" required="required" placeholder="Resting Electro-cardiographic Result">
+                <option value="0">Normal</option>
+                <option value="1">having ST-T wave abnormality</option>
+                <option value="2">showing probable or definite left ventricular hypertrophy</option>
+            	</select>
+              </div>
+              
+              <div class="form-group">
+                <label for="thalach">Maximum Heart Rate Achieved</label>
+                <input class="form-control" id="thalach" name = "thalach" required="required" >
+              </div>
+
+              <div class="form-group">
+                <label for="exang">Exercise Induced Angina</label>
+                <select class="form-control" id="exang" name = "exang" required="required" >
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="oldpeak">ST depression induced by exercise relative to rest  (-2.6 - 6.2)</label>
+                <input class="form-control" type="number" step="any" id="oldpeak" name="oldpeak" required="required" placeholder="ST depression induced by exercise relative to rest">
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="slope">slope of the peak exercise ST segment (0.0 - 2.2)</label>
+                <select class="form-control" id="slope" name = "slope" required="required" placeholder="slope of the peak exercise ST segment" >
+                  <option value="0">upsloping</option>
+                  <option value="1">flat</option>
+                  <option value="2">downSloping</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="ca">The number of major vessels (0.0 - 3.0)</label>
+                <input class="form-control" type="number" step="any" id="ca" name="ca" required="required" placeholder="The number of major vessels">
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="thal">A blood disorder called thalassemia (0.0 - 1.0)</label>
+                <select class="form-control" id="thal" name = "thal" required="required" aria-placeholder="A blood disorder called thalassemia" >
+                  <option value="0">normal</option>
+                  <option value="1">fixed defect</option>
+                  <option value="2">reversible defect</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-danger">Predict</button>
+            </form>
+          </div>
+        </div>
+        <footer >
+
+        </footer>
+      </div>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Final Prediction</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeBox()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="value">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeBox()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+
+      <script>
+        $(document).ready(function() {
+          $('form').submit(function(event) {
+            event.preventDefault();
+            $.post('/predict', $(this).serialize(), function(response) {
+              document.getElementById('value').innerText=response.prediction;
+              $('#myModal').modal('show');
+            });
+          });
+        });
+        const closeBox=()=>{
+           $('#myModal').modal('hide');
+        }
+
+      </script>
+    </body>
+</html>
